@@ -16,7 +16,7 @@
 
             <h2 th:if="${student.id == null}">Add New Student</h2>
             <h2 th:if="${student.id != null}">Edit Student</h2>
-            <p class="subtitle">नीचे सारी details भरें</p>
+            <p class="subtitle">Fill in all the details below</p>
 
             <form th:action="@{/students/save}" th:object="${student}" method="post">
 
@@ -24,7 +24,7 @@
                 <input type="hidden" th:field="*{id}">
 
                 <div class="form-group">
-                    <label for="name">नाम</label>
+                    <label for="name">Name</label>
                     <input type="text" id="name" th:field="*{name}" placeholder="Rahul Sharma" required>
                 </div>
 

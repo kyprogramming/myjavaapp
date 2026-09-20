@@ -13,12 +13,12 @@
     <!-- Navbar Fragment -->
     <header th:fragment="navbar(activePage)" class="navbar">
         <a href="/" class="brand">MyApp</a>
-    <nav>
-        <a th:href="@{/}" th:classappend="${activePage == 'home'} ? 'active'">Home</a>
-        <a th:href="@{/students}" th:classappend="${activePage == 'students'} ? 'active'">Students</a>
-        <a th:href="@{/about}" th:classappend="${activePage == 'about'} ? 'active'">About</a>
-        <a th:href="@{/contact}" th:classappend="${activePage == 'contact'} ? 'active'">Contact</a>
-    </nav>
+        <nav>
+            <a th:href="@{/}" th:classappend="${activePage == 'home'} ? 'active'">Home</a>
+            <a th:href="@{/students}" th:classappend="${activePage == 'students'} ? 'active'">Students</a>
+            <a th:href="@{/about}" th:classappend="${activePage == 'about'} ? 'active'">About</a>
+            <a th:href="@{/contact}" th:classappend="${activePage == 'contact'} ? 'active'">Contact</a>
+        </nav>
     </header>
 
     <!-- Footer Fragment -->
