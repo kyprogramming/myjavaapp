@@ -11,14 +11,14 @@ public class MyController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("name", "Rahul");
+        model.addAttribute("name", "Kaushal");
         model.addAttribute("age", 25);
         return "index";
     }
 
     @GetMapping("/about")
     public String about(Model model) {
-        model.addAttribute("name", "Rahul");
+        model.addAttribute("name", "Kaushal");
         return "about";
     }
 

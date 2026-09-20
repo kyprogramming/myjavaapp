@@ -4,7 +4,7 @@ public class Variables {
         double price = 99.99;      // decimal
         char grade = 'A';          // single character
         boolean isJava = true;     // true/false
-        String name = "Rahul";     // text
+        String name = "Kaushal";     // text
 
         System.out.println(name + " is " + age + " years old");
         System.out.println("Grade: " + grade + ", Price: " + price);
