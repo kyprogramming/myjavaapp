@@ -12,7 +12,7 @@
 
     <!-- Navbar Fragment -->
     <header th:fragment="navbar(activePage)" class="navbar">
-        <a href="/" class="brand">MyApp</a>
+        <a href="/" class="brand">Java App</a>
         <nav>
             <a th:href="@{/}" th:classappend="${activePage == 'home'} ? 'active'">Home</a>
             <a th:href="@{/students}" th:classappend="${activePage == 'students'} ? 'active'">Students</a>
@@ -24,7 +24,7 @@
     <!-- Footer Fragment -->
     <footer th:fragment="footer">
         <p>Built with <span class="heart">❤</span> using Java + Spring Boot + Thymeleaf</p>
-        <p style="margin-top: 8px; font-size: 12px;">© 2026 MyApp. All rights reserved.</p>
+        <p style="margin-top: 8px; font-size: 12px;">© 2026 Java App. All rights reserved.</p>
     </footer>
 
 </body>

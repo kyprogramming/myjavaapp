@@ -16,7 +16,9 @@ public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
 
-    // List all students
+    // ═══════════════════════════════════════
+    // LIST ALL STUDENTS
+    // ═══════════════════════════════════════
     @GetMapping
     public String listStudents(Model model) {
         List<Student> students = studentRepository.findAll();
@@ -25,7 +27,9 @@ public class StudentController {
         return "students/list";
     }
 
-    // Show add form
+    // ═══════════════════════════════════════
+    // SHOW ADD FORM
+    // ═══════════════════════════════════════
     @GetMapping("/new")
     public String showAddForm(Model model) {
         model.addAttribute("student", new Student());
@@ -33,31 +37,9 @@ public class StudentController {
         return "students/form";
     }
 
-    // Save new student — with validation
-    @PostMapping("/save")
-    public String saveStudent(
-            @Valid @ModelAttribute("student") Student student,
-            BindingResult result,
-            Model model) {
-
-        // अगर validation errors हैं तो form पर वापस जाएँ
-        if (result.hasErrors()) {
-            model.addAttribute("isEdit", student.getId() != null);
-            return "students/form";
-        }
-
-        studentRepository.save(student);
-        return "redirect:/students";
-    }
-
-    // Delete student
-    @GetMapping("/delete/{id}")
-    public String deleteStudent(@PathVariable Long id) {
-        studentRepository.deleteById(id);
-        return "redirect:/students";
-    }
-
-    // Show edit form
+    // ═══════════════════════════════════════
+    // SHOW EDIT FORM
+    // ═══════════════════════════════════════
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Student student = studentRepository.findById(id)
@@ -65,5 +47,51 @@ public class StudentController {
         model.addAttribute("student", student);
         model.addAttribute("isEdit", true);
         return "students/form";
+    }
+
+    // ═══════════════════════════════════════
+    // SAVE (ADD or UPDATE)
+    // ═══════════════════════════════════════
+    @PostMapping("/save")
+    public String saveStudent(
+            @Valid @ModelAttribute("student") Student student,
+            BindingResult result,
+            Model model) {
+
+        // Validation errors → form पर वापस
+        if (result.hasErrors()) {
+            model.addAttribute("isEdit", student.getId() != null);
+            return "students/form";
+        }
+
+        // Duplicate email check (नया student के लिए)
+        if (student.getId() == null) {
+            Student existing = studentRepository.findByEmail(student.getEmail());
+            if (existing != null) {
+                result.rejectValue("email", "duplicate", "This email is already registered");
+                model.addAttribute("isEdit", false);
+                return "students/form";
+            }
+        }
+
+        // Save
+        try {
+            studentRepository.save(student);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Failed to save: " + e.getMessage());
+            model.addAttribute("isEdit", student.getId() != null);
+            return "students/form";
+        }
+
+        return "redirect:/students";
+    }
+
+    // ═══════════════════════════════════════
+    // DELETE
+    // ═══════════════════════════════════════
+    @GetMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable Long id) {
+        studentRepository.deleteById(id);
+        return "redirect:/students";
     }
 }
