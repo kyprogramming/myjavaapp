@@ -1,7 +1,14 @@
 package myapps.src.main.java.com.example.myapps.student;
 
-import javax.persistence.*;   // Spring Boot 3.x
-// import javax.persistence.*;  // Spring Boot 2.x के लिए
+
+import javax.persistence.*;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "students")
@@ -11,21 +18,30 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please enter a valid email address")
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @NotNull(message = "Age is required")
+    @Min(value = 1, message = "Age must be at least 1")
+    @Max(value = 120, message = "Age must not exceed 120")
     private int age;
 
+    @NotBlank(message = "Course is required")
+    @Size(min = 2, max = 50, message = "Course must be between 2 and 50 characters")
     private String course;
 
-    // No-arg constructor (JPA के लिए ज़रूरी)
+    // No-arg constructor (required by JPA)
     public Student() {
     }
 
-    // Constructor
+    // Parameterized constructor
     public Student(String name, String email, int age, String course) {
         this.name = name;
         this.email = email;
@@ -33,7 +49,7 @@ public class Student {
         this.course = course;
     }
 
-    // Getters और Setters
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

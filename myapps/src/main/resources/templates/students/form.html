@@ -3,55 +3,298 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Student | My App</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* ============ FORM CONTAINER ============ */
+        .form-wrapper {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 60px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border-top: 6px solid #3498db;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .form-header .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .form-header .subtitle {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        /* ============ FORM ROWS ============ */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        /* ============ FORM GROUPS ============ */
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #34495e;
+            letter-spacing: 0.2px;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        /* ============ INPUTS ============ */
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: #fafbfc;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #bdc3c7;
+        }
+
+        /* ============ ERROR STATES ============ */
+        .form-group.has-error label {
+            color: #e74c3c;
+        }
+
+        .form-group.has-error input,
+        .form-group.has-error textarea {
+            border-color: #e74c3c;
+            background: #fef5f5;
+        }
+
+        .form-group.has-error input:focus {
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);
+        }
+
+        .error-message {
+            display: block;
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 8px;
+            font-weight: 500;
+            padding-left: 4px;
+        }
+
+        .error-message::before {
+            content: "⚠ ";
+            margin-right: 4px;
+        }
+
+        /* ============ HELP TEXT ============ */
+        .help-text {
+            font-size: 13px;
+            color: #95a5a6;
+            margin-top: 6px;
+            padding-left: 4px;
+        }
+
+        /* ============ FORM ACTIONS ============ */
+        .form-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .form-actions .btn {
+            flex: 1;
+            padding: 16px 28px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .form-actions .btn-outline {
+            flex: 0 0 auto;
+            min-width: 140px;
+        }
+
+        /* ============ ALERT ============ */
+        .alert-error {
+            background: #fdecea;
+            color: #b71c1c;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid #e74c3c;
+            font-size: 15px;
+        }
+
+        .alert-error strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 30px 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .form-actions .btn-outline {
+                min-width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <div th:replace="~{fragments/header :: navbar('students')}"></div>
 
-    <div class="container" style="padding-top: 40px;">
+    <div class="form-wrapper">
         <div class="form-container">
 
-            <h2 th:if="${student.id == null}">Add New Student</h2>
-            <h2 th:if="${student.id != null}">Edit Student</h2>
-            <p class="subtitle">Fill in all the details below</p>
+            <!-- Header -->
+            <div class="form-header">
+                <div class="icon">
+                    <span th:if="${!isEdit}">👨‍🎓</span>
+                    <span th:if="${isEdit}">✏️</span>
+                </div>
+                <h2 th:if="${!isEdit}">Add New Student</h2>
+                <h2 th:if="${isEdit}">Edit Student</h2>
+                <p class="subtitle" th:if="${!isEdit}">Fill in all the details below to add a student</p>
+                <p class="subtitle" th:if="${isEdit}">Update the student information below</p>
+            </div>
 
-            <form th:action="@{/students/save}" th:object="${student}" method="post">
+            <!-- Global error alert -->
+            <div class="alert-error" th:if="${#fields.hasAnyErrors()}">
+                <strong>Please fix the errors below:</strong>
+                Some fields have invalid or missing information.
+            </div>
+
+            <!-- Form -->
+            <form th:action="@{/students/save}" th:object="${student}" method="post" novalidate>
 
                 <!-- Hidden ID for edit -->
                 <input type="hidden" th:field="*{id}">
 
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" th:field="*{name}" placeholder="Kaushal Sharma" required>
+                <!-- Row 1: Name & Email -->
+                <div class="form-row">
+
+                    <!-- Name -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error'">
+                        <label for="name">
+                            Name <span class="required">*</span>
+                        </label>
+                        <input type="text" id="name" th:field="*{name}" placeholder="Enter full name" required>
+                        <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+                            error</span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+                        <label for="email">
+                            Email <span class="required">*</span>
+                        </label>
+                        <input type="email" id="email" th:field="*{email}" placeholder="student@example.com" required>
+                        <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+                            error</span>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" th:field="*{email}" placeholder="rahul@example.com" required>
+                <!-- Row 2: Age & Course -->
+                <div class="form-row">
+
+                    <!-- Age -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('age')} ? 'has-error'">
+                        <label for="age">
+                            Age <span class="required">*</span>
+                        </label>
+                        <input type="number" id="age" th:field="*{age}" placeholder="Enter age" min="1" max="120"
+                            required>
+                        <span class="error-message" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age
+                            error</span>
+                    </div>
+
+                    <!-- Course -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('course')} ? 'has-error'">
+                        <label for="course">
+                            Course <span class="required">*</span>
+                        </label>
+                        <input type="text" id="course" th:field="*{course}" placeholder="e.g. Java Programming"
+                            required>
+                        <span class="error-message" th:if="${#fields.hasErrors('course')}" th:errors="*{course}">Course
+                            error</span>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="age">Age</label>
-                    <input type="number" id="age" th:field="*{age}" placeholder="20" min="1" max="100" required>
+                <!-- Help text -->
+                <div class="help-text" style="text-align: center; margin-top: 20px;">
+                    Fields marked with <span style="color: #e74c3c; font-weight: bold;">*</span> are required
                 </div>
 
-                <div class="form-group">
-                    <label for="course">Course</label>
-                    <input type="text" id="course" th:field="*{course}" placeholder="Java Programming" required>
+                <!-- Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <span th:if="${!isEdit}">💾 Save Student</span>
+                        <span th:if="${isEdit}">✅ Update Student</span>
+                    </button>
+
+                    <a href="/students" class="btn btn-outline">
+                        Cancel
+                    </a>
                 </div>
-
-                <button type="submit" class="btn btn-primary">
-                    <span th:if="${student.id == null}">💾 Save Student</span>
-                    <span th:if="${student.id != null}">✅ Update Student</span>
-                </button>
-
-                <a href="/students" class="btn btn-outline"
-                    style="margin-top: 12px; display: block; text-align: center;">
-                    Cancel
-                </a>
             </form>
         </div>
     </div>

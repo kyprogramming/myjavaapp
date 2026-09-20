@@ -3,8 +3,10 @@ package myapps.src.main.java.com.example.myapps.student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -27,12 +29,23 @@ public class StudentController {
     @GetMapping("/new")
     public String showAddForm(Model model) {
         model.addAttribute("student", new Student());
+        model.addAttribute("isEdit", false);
         return "students/form";
     }
 
-    // Save new student
+    // Save new student — with validation
     @PostMapping("/save")
-    public String saveStudent(@ModelAttribute Student student) {
+    public String saveStudent(
+            @Valid @ModelAttribute("student") Student student,
+            BindingResult result,
+            Model model) {
+
+        // अगर validation errors हैं तो form पर वापस जाएँ
+        if (result.hasErrors()) {
+            model.addAttribute("isEdit", student.getId() != null);
+            return "students/form";
+        }
+
         studentRepository.save(student);
         return "redirect:/students";
     }
@@ -50,6 +63,7 @@ public class StudentController {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid student id: " + id));
         model.addAttribute("student", student);
+        model.addAttribute("isEdit", true);
         return "students/form";
     }
 }

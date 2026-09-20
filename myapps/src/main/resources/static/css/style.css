@@ -386,6 +386,18 @@ footer .heart {
     color: #e74c3c;
 }
 
+.form-container .btn-outline {
+    background: transparent;
+    color: #7f8c8d;
+    border: 2px solid #e1e8ed;
+}
+
+.form-container .btn-outline:hover {
+    background: #f8f9fa;
+    color: #2c3e50;
+    border-color: #bdc3c7;
+}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width: 768px) {
     .navbar {
