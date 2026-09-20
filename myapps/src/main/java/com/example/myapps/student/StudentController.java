@@ -1,4 +1,4 @@
-package myapps.src.main.java.com.example.myapps.student;
+package com.example.myapps.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -24,7 +24,8 @@
         <div class="card" style="margin-bottom: 40px;">
             <h3>📖 About the Project</h3>
             <p>This is a Spring Boot web application that demonstrates how to build modern web apps with Java. It uses
-                MVC architecture, Thymeleaf templates, and responsive design.</p>
+                MVC architecture, Thymeleaf templates, PostgreSQL database, and responsive design — all running in a
+                single Docker container.</p>
         </div>
 
         <h2 style="text-align: center; margin: 40px 0 20px;">Technologies Used</h2>
@@ -47,14 +48,32 @@
                 <h3>Thymeleaf</h3>
                 <p>HTML templates that render dynamic data seamlessly.</p>
             </div>
+
+            <div class="card">
+                <div class="icon">🐘</div>
+                <h3>PostgreSQL</h3>
+                <p>Powerful open-source relational database for persistent data storage.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🐳</div>
+                <h3>Docker</h3>
+                <p>Containerized deployment with PostgreSQL and app in a single image.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🔗</div>
+                <h3>Spring Data JPA</h3>
+                <p>Simplifies database operations with Hibernate ORM under the hood.</p>
+            </div>
         </div>
 
         <h2 style="text-align: center; margin: 60px 0 20px;">Team</h2>
 
         <div class="team-grid">
             <div class="team-member">
-                <div class="avatar" th:text="${name.substring(0,1)}">R</div>
-                <h4 th:text="${name}">Kaushal</h4>
+                <div class="avatar" th:text="${name.substring(0,1)}">K</div>
+                <h4 th:text="${name}">Kaushal Yadav</h4>
                 <p class="role">Developer</p>
             </div>
 
@@ -68,6 +87,12 @@
                 <div class="avatar">S</div>
                 <h4>Spring</h4>
                 <p class="role">Framework</p>
+            </div>
+
+            <div class="team-member">
+                <div class="avatar">P</div>
+                <h4>PostgreSQL</h4>
+                <p class="role">Database</p>
             </div>
         </div>
     </div>

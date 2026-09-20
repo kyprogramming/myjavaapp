@@ -1,28 +1,45 @@
-# Build stage
+# ═══════════════════════════════════════
+# STAGE 1: BUILD SPRING BOOT APP
+# ═══════════════════════════════════════
 FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy pom.xml first (cache के लिए)
 COPY pom.xml .
-
-# Download dependencies (cache layer)
 RUN mvn dependency:go-offline -B
 
-# Copy source code
 COPY src ./src
-
-# Build the application
 RUN mvn clean package -DskipTests
 
-# Run stage
+# ═══════════════════════════════════════
+# STAGE 2: RUNTIME WITH POSTGRESQL + APP
+# ═══════════════════════════════════════
 FROM eclipse-temurin:17-jre
-WORKDIR /app
 
-# Copy the built JAR
-COPY --from=build /app/target/*.jar app.jar
+# Install PostgreSQL और supervisor
+RUN apt-get update && \
+    apt-get install -y postgresql postgresql-contrib supervisor && \
+    rm -rf /var/lib/apt/lists/*
+
+# PostgreSQL setup
+ENV PGDATA=/var/lib/postgresql/data
+RUN mkdir -p $PGDATA && \
+    chown -R postgres:postgres /var/lib/postgresql
+
+# App directory
+WORKDIR /app
+COPY --from=build /app/target/*.jar /app/app.jar
+
+# Copy configs
+COPY docker/start-postgres.sh /app/start-postgres.sh
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN chmod +x /app/start-postgres.sh
+
+# PostgreSQL data directory (persistent)
+VOLUME ["/var/lib/postgresql/data"]
 
 # Expose port
 EXPOSE 8080
 
-# Run the app (with dynamic port for Render)
-ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar app.jar"]
+# Start supervisor (jo PostgreSQL aur Spring Boot dono manage karega)
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -20,7 +20,7 @@
     <div class="container">
         <div class="form-container">
 
-            <!-- Success message (form के बाहर — ठीक है, क्योंकि #fields use नहीं हो रहा) -->
+            <!-- Success message — form के बाहर ठीक है (success variable use करता है, #fields नहीं) -->
             <div class="alert alert-success" th:if="${success}">
                 ✅ <strong>Thank you!</strong> Your message has been sent successfully.
             </div>
@@ -35,7 +35,7 @@
             <!-- Form -->
             <form th:action="@{/contact}" th:object="${contactForm}" method="post" novalidate>
 
-                <!-- ✅ Global error alert — form के अंदर -->
+                <!-- ✅ Global error alert — form के अंदर होना ज़रूरी -->
                 <div class="alert-error" th:if="${#fields.hasAnyErrors()}">
                     <strong>Please fix the errors below:</strong>
                     Some fields have invalid or missing information.

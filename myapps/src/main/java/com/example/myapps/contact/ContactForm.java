@@ -1,4 +1,5 @@
-package myapps.src.main.java.com.example.myapps.contact;
+package com.example.myapps.contact;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

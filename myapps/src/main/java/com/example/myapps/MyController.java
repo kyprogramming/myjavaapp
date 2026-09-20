@@ -1,6 +1,6 @@
-package myapps.src.main.java.com.example.myapps;
+package com.example.myapps;
 
-import myapps.src.main.java.com.example.myapps.contact.ContactForm;
+import com.example.myapps.contact.ContactForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -11,7 +11,9 @@ LICENSE
 mvnw
 mvnw.cmd
 Dockerfile
+docker-compose.yml
 .dockerignore
 *.log
 logs/
 .DS_Store
+data/

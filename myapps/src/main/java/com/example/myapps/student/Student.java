@@ -1,4 +1,4 @@
-package myapps.src.main.java.com.example.myapps.student;
+package com.example.myapps.student;
 
 import javax.persistence.*;
 
