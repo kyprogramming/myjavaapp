@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Student | My App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <div th:replace="~{fragments/header :: navbar('students')}"></div>
+
+    <div class="container" style="padding-top: 40px;">
+        <div class="form-container">
+
+            <h2 th:if="${student.id == null}">Add New Student</h2>
+            <h2 th:if="${student.id != null}">Edit Student</h2>
+            <p class="subtitle">नीचे सारी details भरें</p>
+
+            <form th:action="@{/students/save}" th:object="${student}" method="post">
+
+                <!-- Hidden ID for edit -->
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label for="name">नाम</label>
+                    <input type="text" id="name" th:field="*{name}" placeholder="Rahul Sharma" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" th:field="*{email}" placeholder="rahul@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" th:field="*{age}" placeholder="20" min="1" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <input type="text" id="course" th:field="*{course}" placeholder="Java Programming" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <span th:if="${student.id == null}">💾 Save Student</span>
+                    <span th:if="${student.id != null}">✅ Update Student</span>
+                </button>
+
+                <a href="/students" class="btn btn-outline"
+                    style="margin-top: 12px; display: block; text-align: center;">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/header :: footer}"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | My Java App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div th:replace="~{fragments/header :: navbar('about')}"></div>
+
+    <!-- Hero -->
+    <section class="hero" style="padding: 50px 20px;">
+        <h1>About This App</h1>
+        <p>जानिए इस project के बारे में और मेरे बारे में</p>
+    </section>
+
+    <!-- Content -->
+    <div class="container">
+        <div class="card" style="margin-bottom: 40px;">
+            <h3>📖 Project के बारे में</h3>
+            <p>यह एक Spring Boot web application है जो दिखाती है कि Java से modern web apps कैसे बनाए जाते हैं। इसमें
+                MVC architecture, Thymeleaf templates, और responsive design का use किया गया है।</p>
+        </div>
+
+        <h2 style="text-align: center; margin: 40px 0 20px;">टेक्नोलॉजीज़</h2>
+
+        <div class="cards">
+            <div class="card">
+                <div class="icon">☕</div>
+                <h3>Java 17</h3>
+                <p>Modern Java features के साथ backend logic।</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🌱</div>
+                <h3>Spring Boot</h3>
+                <p>Web framework जो सब कुछ manage करता है।</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🍃</div>
+                <h3>Thymeleaf</h3>
+                <p>HTML templates जो dynamic data render करते हैं।</p>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin: 60px 0 20px;">Team</h2>
+
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="avatar" th:text="${name.substring(0,1)}">R</div>
+                <h4 th:text="${name}">Rahul</h4>
+                <p class="role">Developer</p>
+            </div>
+
+            <div class="team-member">
+                <div class="avatar">J</div>
+                <h4>Java</h4>
+                <p class="role">Language</p>
+            </div>
+
+            <div class="team-member">
+                <div class="avatar">S</div>
+                <h4>Spring</h4>
+                <p class="role">Framework</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/header :: footer}"></div>
+
+</body>
+
+</html>

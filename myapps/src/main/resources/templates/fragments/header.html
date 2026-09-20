@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Java App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- Navbar Fragment -->
+    <header th:fragment="navbar(activePage)" class="navbar">
+        <a href="/" class="brand">MyApp</a>
+    <nav>
+        <a th:href="@{/}" th:classappend="${activePage == 'home'} ? 'active'">Home</a>
+        <a th:href="@{/students}" th:classappend="${activePage == 'students'} ? 'active'">Students</a>
+        <a th:href="@{/about}" th:classappend="${activePage == 'about'} ? 'active'">About</a>
+        <a th:href="@{/contact}" th:classappend="${activePage == 'contact'} ? 'active'">Contact</a>
+    </nav>
+    </header>
+
+    <!-- Footer Fragment -->
+    <footer th:fragment="footer">
+        <p>Built with <span class="heart">❤</span> using Java + Spring Boot + Thymeleaf</p>
+        <p style="margin-top: 8px; font-size: 12px;">© 2026 MyApp. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

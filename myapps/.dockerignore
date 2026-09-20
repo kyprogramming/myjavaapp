@@ -1,0 +1,17 @@
+target/
+.git/
+.gitignore
+.idea/
+.vscode/
+*.iml
+*.md
+README*
+LICENSE
+.mvn/
+mvnw
+mvnw.cmd
+Dockerfile
+.dockerignore
+*.log
+logs/
+.DS_Store

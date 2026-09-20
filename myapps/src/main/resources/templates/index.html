@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | My Java App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div th:replace="~{fragments/header :: navbar('home')}"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <span class="badge">✨ Spring Boot + Thymeleaf</span>
+        <h1>Welcome, <span th:text="${name}">Guest</span>! 👋</h1>
+        <p>यह मेरा पहला professional Java web application है। Modern design, responsive layout, और dynamic data — सब कुछ
+            एक साथ।</p>
+        <a href="/about" class="btn btn-primary">Learn More →</a>
+    </section>
+
+    <!-- Cards -->
+    <div class="container">
+        <div class="cards">
+            <div class="card">
+                <div class="icon">🚀</div>
+                <h3>Fast & Modern</h3>
+                <p>Spring Boot से बना, हल्का और तेज़। Server कुछ seconds में start हो जाता है।</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🎨</div>
+                <h3>Beautiful UI</h3>
+                <p>Responsive design, mobile-friendly layout, और modern gradient effects।</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">⚡</div>
+                <h3>Dynamic Content</h3>
+                <p>Thymeleaf से HTML में Java data automatically render होता है।</p>
+            </div>
+        </div>
+
+        <!-- User Info Card -->
+        <div class="profile-card">
+            <div class="avatar" th:text="${name.substring(0,1)}">R</div>
+            <h2 th:text="${name}">Rahul</h2>
+            <p class="subtitle">Java Developer (Learning)</p>
+
+            <div class="stats">
+                <div>
+                    <div class="number" th:text="${age}">25</div>
+                    <div class="label">Age</div>
+                </div>
+                <div>
+                    <div class="number">1</div>
+                    <div class="label">Projects</div>
+                </div>
+                <div>
+                    <div class="number">100%</div>
+                    <div class="label">Motivation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/header :: footer}"></div>
+
+</body>
+
+</html>
