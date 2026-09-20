@@ -10,9 +10,5 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
-
-# Render एक PORT environment variable देगा
 EXPOSE 8080
-
-# PORT env var use करें, fallback 8080
 ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar app.jar"]
